@@ -22,7 +22,7 @@
 	%setspace：设置行间距等功能
 	\setlength{\parindent}{2em}%正文首行缩进两个汉字
 	%listings:用于排版各种代码；比如matlab的代码
-	\lstset{language=Matlab}%matlab代码
+	\lstset{language=c++}%matlab代码
 	%代码环境的使用可以参考完整实验报告模板
 
 \setCJKmainfont{FZShuSong-Z01S}[ItalicFont=FZKai-Z03S, BoldFont=FZHei-B01S]
@@ -56,45 +56,11 @@
 	%实验名称根据实际情况修改
 	\fancypagestyle{maincontent}{
 		\fancyhf{}  %清空页眉页脚设置
-		\fancyhead[EL, OR]{\thepage}
-		\fancyhead[EC]{Pregel：一个大规模图计算系统}
-		\fancyhead[OC]{大\quad 数\quad 据\quad 技\quad 术\quad 报\quad 告}
-		\renewcommand\headrulewidth{0pt}
+		\fancyfoot[EC, OC]{\thepage}
+		\renewcommand\footrulewidth{0pt}
 	}
 
-	%%% Step2 定义首页的页面风格
-	%页眉中间的双行文字，大小和字间距需要微调
-	%左右的内容是年月，可以自己修改寻找自动获取的方法
-	\usepackage{datetime}
-		%\shortmonthname可以获取英文月份缩写
-	\fancypagestyle{firstpage}{
-		\setboolean{first}{false}%firstpage出现，则将first重置为false
-		\fancyhf{}  %清空页眉页脚设置
-		\fancyhead[L]{\the\year 年\the\month 月}
-		\fancyhead[R]{\shortmonthname[\the\month], \the\year}
-		\fancyhead[C]{
-		          \large{大\quad 数\quad 据\quad 技\quad 术\quad 报\quad 告}\\
-		          \normalsize{BIG DATA TECHNOLOGY REPORT}
-		          }
-	}
-
-	%%% Step3 页眉线的设置：用布尔变量区分首页和正文
-	\newcommand{\makefirstpageheadrule}{%定义首页页眉线-双线绘制命令
-		\makebox[0pt][l]{\rule[0.55\baselineskip]{\headwidth}{0.2pt}}%上0.5pt，下0.2pt
-		\rule[0.7\baselineskip]{\headwidth}{0.5pt}
-	}
-
-	\newcommand{\makeheadrule}{%定义正文页页眉线绘制命令，单线
-		\rule[0.7\baselineskip]{\headwidth}{0.75pt}
-	}
-
-	%根据布尔变量first为true或false分别执行不同的页眉线绘制命令
-	\renewcommand{\headrule}{%重定义headrule命令
-		\ifthenelse{\boolean{first}}{\makeheadrule}
-		{\makefirstpageheadrule}
-	}
-
-
+	
 
 %%end--------------设置首页和正文不同的页眉页脚-----------%%
 
@@ -126,11 +92,14 @@
 
 \begin{document}
 
+%\textbf是粗体 \Large是17pt
+\title{\Large\songti{蚁群算法}}
+\date{}%不显示日期
 
 %%begin-------------------中文摘要-----------------------%%
-\title{\LARGE\textbf{Pregel：一个大规模图计算系统}}
-\author{\large\textit{李妍妍}$^{1}$\\ \normalsize{（1 \textit{广州大学 {} 计算机科学与网络工程学院，广东{} 广州 }510000）}}
-\date{}%不显示日期
+
+%\author{\large\textit{李妍妍}$^{1}$\\ \normalsize{（1 \textit{广州大学 {} 计算机科学与网络工程学院，广东{} 广州 }510000）}}
+
 
 \twocolumn[
 	%twocolumn: 双栏article下的单栏摘要
@@ -138,9 +107,24 @@
 	\maketitle  %标题和作者
   	\renewcommand{\abstractname} {} %不显示摘要名字
 	\begin{abstract}
-	\vspace{-3em}
+	\vspace{-7em}
 	%vspace：调整垂直空白，可以自己调整；缩小abstract和center（以及maketitle）的间距
 	%\noindent %备用：摘要无缩进
+	\setlength{\tabcolsep}{10.mm}{
+		\begin{tabular}{| l | l |}% 通过添加 | 来表示是否需要绘制竖线
+		\hline  % 在表格最上方绘制横线
+		研究生姓名：李妍妍& 学号：2112006029\\
+		\hline  %在第一行和第二行之间绘制横线
+		所在专业：网络空间安全专业& 研究生所在学院：计算机科学与网络工程学院\\
+		\hline % 在表格最下方绘制横线
+		递交课程老师姓名: 高鹰& 评分（百分制）： \\
+		\hline  %在第一行和第二行之间绘制横线
+		课程名称：人工智能中的仿生优化算法& 评分教师签名：\\
+		\hline  %在第一行和第二行之间绘制横线
+		\end{tabular}
+	}
+	
+       \vspace{3em}
 	{\bf 摘{} 要：}
 	{\small 在许多实际计算问题中，大数据都是以大规模图或网络的形式呈现。而传统的图计算存在着诸如内存访问局部性等问题。Google在2010年提出了一种适用于此任务的计算模型，即Pregel。Pregel是一种基于BSP模型实现的并行图处理系统。在该系统中，程序是一系列的迭代，每个顶点都可以接收在前一个迭代中发送的消息，然后发送消息给其他顶点，并修改自己的状态和其输出边的状态，或改变图拓扑结构。这种以顶点为中心的方法足够灵活，可以表达一组广泛的算法。Pregel就搭建了一套可扩展的、有容错机制的平台，该平台提供了一套非常灵活的API，可以描述各种各样的图计算。本文详细的介绍了并行计算模型BSP和Pregel的基本原理及其基础架构。}
 	\par%空的新行的高度。
@@ -152,7 +136,6 @@
 
 %%end-------------------中文摘要-----------------------%%
 
-\thispagestyle{firstpage}%首页页面风格：firstpage
 \pagestyle{maincontent}%第二页之后的页面风格：maincontent
 
 %%begin----------------层级结构------------------------%%
