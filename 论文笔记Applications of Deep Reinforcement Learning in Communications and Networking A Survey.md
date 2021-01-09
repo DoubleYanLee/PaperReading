@@ -287,9 +287,45 @@ DQL keeps following the learned policy over time slots and stops learning a suit
 
   #### 5. CHALLENGES, OPEN ISSUES, AND FUTURE RESEARCH DIRECTIONS 挑战、开放问题及未来研究方向
 
-  
+  ##### 挑战
 
-  
+  * *State Determination in Density Networks:* 
+    * the DRL approaches often require the users to report their local states at every time slot
+    * 为了观察本地状态，用户需要监控来自相邻BSs的RSSIs(Received Signal Strength Indicators) 然后暂时使用最大RSSIs连接BS。但是未来基站的RSSI将趋于相同，所以就很难选择这个临时BS
+  * *Knowledge of Jammers’ Channel Information*
+    * [126]提出的无线安全DRL方法使无人机能够找到最优的传输功率水平，使无人机和BS的安全能力最大化。然而，为了制定无人机的奖励，需要对干扰机的信道信息有一个完整的了解。这在实践中具有挑战性，甚至是不可能的。
+  * *Multi-Agent DRL in Dynamic HetNets*
+    * 现有的大部分工作都集中在基于本地观察或交换的网络信息为单个网络实体定制DRL框架上。希望网络环境是相对静态的，以保证学习结果的收敛和政策的稳定。在动态异构5G网络中，这一要求可能会受到挑战，该网络由分层嵌套的物联网设备/网络组成，具有快速变化的业务需求和网络条件。在这种情况下，单个实体的DQL代理必须是轻量级的，并且能够灵活地适应网络条件的变化。这意味着在学习中状态和行动空间的减少，然而这可能会损害收敛策略的性能。多智能体之间的相互作用也使网络环境复杂化，导致状态空间的大幅度增加，这不可避免地降低了学习算法的速度。
+  * *Training and Performance Evaluation of DRL Framework:*
+    * 在无线通信中，训练和测试的数据很难获取。许多已有的工作是基于模拟数据的，这比真实数据就简单很多。
+
+  ##### open issues
+
+  * *Distributed DRL Framework in Wireless Networks*
+    * DRL框架需要大量的DNNs训练。对于limited capabilities的大量终端用户来说，为DRL框架设计分布式实现是一项有意义的任务。
+  * *Balance Between Information Quality and Learning Performance*
+    	* 如何在信息质量和学习性能之间找到最优平衡点，使DQL代理不会消耗过多的资源而只获得学习性能不显著的边际增长，是一个需要解决的问题。
+
+  ##### 未来研究方向
+
+  * *DRL for Channel Estimation in Wireless Systems*
+
+    	* Wireless-Powered Crowd Sensing (WPCS) 技术将更有前景。所以，提高WPT的功率传输效率是实现WPT在低功耗广域网中部署的关键。
+    	* 由于传感器必须通过专用能源的WPT进行自我供电，所以基于传感器节点的接收功率，将其作为DQL的输入，从而实现对信道的估计
+
+  * *DRL for Crowdsensing Service Optimization:*
+
+    * 在MCS(Mobile Crowd Sensing 移动群智感知)中，移动用户向众测服务提供商提供传感数据，并获得奖励。然而，由于有限的资源，例如带宽和能量，移动用户必须决定是否和多少数据上传到提供商。同样地，以利润最大化为目标的提供者必须确定给予奖励的数量。提供商的决定取决于移动用户的操作。例如，由于许多移动用户向众测服务提供商提供数据，该提供商可以降低激励。由于用户数量多，状态空间大，环境动态，采用DRL可以得到类似于[194]的最优群智感知策略。
+
+  * *DRL for Cryptocurrency Management in Wireless Networks*、
+
+    * 用于无线资源访问和服务使用，或兑换成真实的货币。在随机加密货币市场环境下，DRL可以像[198]一样，为无线用户实现加密货币管理的最大长期回报。
+
+  * *DRL for Auction(拍卖)*
+
+    	* Auction已被有效地用于无线电资源管理，例如频谱分配[199]。然而，当竞拍者(即竞拍者和竞拍者)非常多时，如何确定拍卖的结果就变得复杂而棘手了。这种情况在下一代无线网络中是典型的，如5G高密度异构网络。DRL似乎是解决不同类型的拍卖的有效方法，如在[200]。
+
+    
 
   
 
